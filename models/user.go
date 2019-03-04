@@ -1,4 +1,4 @@
-package modes
+package models
 
 import (
 	"database/sql"
@@ -12,4 +12,8 @@ type User struct {
 	UserPassWord string `gorm:"not null;size:40"`
 	LoginIP      sql.NullString
 	LoginTime    time.Time
+	IsActive     int      `gorm:"not null; default: 0"`
+	UserInfo     UserInfo `gorm:"ForeignKey:UserInfoID; AssociationForeignKey:ID"`
+	UserInfoID   uint     `gorm:"index; not null"`
+	Article      []Article
 }
