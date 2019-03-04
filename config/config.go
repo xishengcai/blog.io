@@ -48,6 +48,14 @@ type RedisConfig struct {
 	Port string `toml:"r_port"`
 }
 
+// return single config instance
+func Config() *BlogConfig{
+	sOnce.Do(decodeConfig)
+	lock.RLocker()
+	defer lock.RUnlock()
+	return cfg
+}
+
 // decode config with toml file
 func decodeConfig() {
 	path := os.Getenv("APP_CONFIG_PATH")
